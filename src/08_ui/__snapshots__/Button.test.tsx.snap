@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button renders correctly with react-test-renderer 1`] = `
+<button
+  onClick={[Function]}
+  style={
+    Object {
+      "backgroundColor": "green",
+      "color": "white",
+    }
+  }
+>
+  ON
+</button>
+`;

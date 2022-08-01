@@ -1,16 +1,18 @@
 import { useState } from 'react'
+import './button.css';
 
-export default function Button() {
+interface ButtonProps {
+  primary?: boolean;
+}
+
+export const Button = ({ primary = true, ...props }: ButtonProps) => {
   const [isToggleOn, setIsToggleOn] = useState(true)
 
-  const buttonStyle = {
-    backgroundColor: 'green',
-    color: 'white'
-  }
+  const className = primary ? "primary" : "secondary"
 
   return (
-    <button onClick={() => setIsToggleOn(!isToggleOn)} style={buttonStyle}>
+    <button className={className} onClick={() => setIsToggleOn(!isToggleOn)}>
       {isToggleOn ? 'ON' : 'OFF'}
-    </button>
+    </button >
   )
 }

@@ -30,7 +30,7 @@ describe('e2e test with selenium and chromeDriver', () => {
     // 検索ボックスの要素を探し、webdriver`、エンターキーを入力
     await chromeDriver.findElement(By.name('q')).sendKeys('webdriver', Key.RETURN)
     // ページのタイトルが`webdriver - Google Search`であることを確認
-    const results = await chromeDriver.wait(until.titleIs('webdriver - Google Search'))
+    const results = await chromeDriver.wait(until.titleIs('webdriver - Google Search'), 10000)
     expect(results).toBe(true)
   })
 })
@@ -59,7 +59,8 @@ describe('e2e test with selenium and geckoDriver', () => {
     // 検索ボックスの要素を探し、webdriver`、エンターキーを入力
     await geckoDriver.findElement(By.name('q')).sendKeys('webdriver', Key.RETURN)
     // ページのタイトルが`webdriver - Google Search`であることを確認
-    const results = await geckoDriver.wait(until.titleIs('webdriver - Google Search'))
+    const results = await geckoDriver.wait(until.titleIs('webdriver - Google Search'), 10000)
     expect(results).toBe(true)
   })
 })
+

@@ -2,7 +2,9 @@
  * @jest-environment node
  */
 
-import playwright, { Browser, Page } from 'playwright'
+import playwright, { Browser, Page, BrowserContext } from 'playwright'
+import fs from 'fs'
+import path from 'path'
 
 describe.each([
   { browserType: "chromium" },
@@ -11,6 +13,7 @@ describe.each([
 ])('e2e test with playwright and $browserType', ({ browserType }) => {
   let browser: Browser
   let page: Page
+  let context: BrowserContext
 
   beforeAll(async () => {
     browser = await playwright[browserType].launch() // ブラウザの起動
@@ -22,10 +25,29 @@ describe.each([
   })
 
   beforeEach(async () => {
-    page = await browser.newPage() // 新しいページを立ち上げる
+    page = await browser.newPage({
+      recordVideo: {
+        dir: 'videos'
+      }
+    }) // 新しいページを立ち上げる
   });
   afterEach(async () => {
+    // 記号や空白を_(アンダーバー)へ置換
+    const testName = expect.getState().currentTestName.replace(/\W/g, '_')
+    // テストファイルからディレクトリ名を取得
+    const parsedTestPath = expect.getState().testPath.match(/\/hello-jest-ts\/src\/(?<testDirectory>[\w]+)\//)
+    const testDirectory = parsedTestPath ? path.resolve(__dirname, `../../videos/${parsedTestPath.groups?.testDirectory}`) : ''
+
+    const videoPath = await page.video()?.path() // 動画のファイルのパスを取得
     await page.close() // ページを終了する
+
+    // testDirectoryが生成できていない場合は rename をしない
+    if (testDirectory) {
+      // ディレクトリを作成
+      if (!fs.existsSync(testDirectory)) fs.mkdirSync(testDirectory)
+      // 動画のファイル名を変更
+      if (videoPath) fs.renameSync(videoPath, `${testDirectory}/${testName}.webm`)
+    }
   });
 
   it('a search keyword will be on the page title in google.com', async () => {

@@ -19,11 +19,14 @@
       const showMessage = () => {
         const p = document.createElement('p');
         p.textContent = "You Passed!!!";
+        // 2回クリックされてもpタグを挿入しない
         if (document.querySelector('#message').textContent == "") {
+          // pタグを挿入
           document.querySelector('#message').prepend(p);
         }
       }
       const button = document.querySelector('#showMessage');
+      // idがshowMessageのボタンがクリックされた際にshowMessage関数を呼び出すよう設定
       button.addEventListener('click', showMessage);
     })();
   </script>

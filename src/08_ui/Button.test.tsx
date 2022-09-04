@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import renderer from 'react-test-renderer'
 import { render, fireEvent, screen } from '@testing-library/react';
 import { Button } from './Button'

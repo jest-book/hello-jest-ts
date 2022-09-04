@@ -1,9 +1,15 @@
 export default {
   preset: 'ts-jest/presets/js-with-ts-esm',
-  "globals": {
+  globals: {
     "ts-jest": {
-      "tsconfig": "tsconfig.json"
+      tsconfig: "tsconfig.json"
     }
   },
-  "testEnvironment": "jsdom",
+  moduleNameMapper: {
+    "\\.(css|less|scss)$": "identity-obj-proxy"
+  },
+  testEnvironment: "jsdom",
+  setupFilesAfterEnv: [
+    "./jestSetup.ts"
+  ]
 }

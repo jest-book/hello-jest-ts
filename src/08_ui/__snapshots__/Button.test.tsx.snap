@@ -2,13 +2,8 @@
 
 exports[`Button renders correctly with react-test-renderer 1`] = `
 <button
+  className="primary"
   onClick={[Function]}
-  style={
-    Object {
-      "backgroundColor": "green",
-      "color": "white",
-    }
-  }
 >
   ON
 </button>

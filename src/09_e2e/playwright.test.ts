@@ -2,6 +2,8 @@
  * @jest-environment node
  */
 
+jest.setTimeout(10000);
+
 import playwright, { Browser, Page, BrowserContext } from 'playwright'
 import fs from 'fs'
 import path from 'path'

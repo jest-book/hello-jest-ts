@@ -4,3 +4,7 @@ storybook-static
 
 # E2E test recordings
 videos
+
+# jest-junit
+reports
+junit.xml

@@ -5,6 +5,14 @@ jobs: # ジョブの設定
       - image: cimg/node:16.17.0
     steps:
       - checkout # Githubからソースコードをチェックアウトする
+      - run:
+          name: Install node packages # 依存関係のインストール
+          command: npm install --force
+      - run:
+          name: Run Test # UIとE2E以外のテストを実行
+          command: npm test -- src/03_getting_started_jest src/04_assertion src/06_group src/07_mock
+      - store_test_results: # テスト結果をアップロード
+          path: reports
 
 workflows: # ワークフローの設定
   test:

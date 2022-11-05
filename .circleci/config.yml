@@ -3,6 +3,7 @@ jobs: # ジョブの設定
   test:
     docker:
       - image: cimg/node:16.17.0
+    parallelism: 2 # 並列数を2で実行
     steps:
       - checkout # Githubからソースコードをチェックアウトする
       - run:
@@ -10,7 +11,10 @@ jobs: # ジョブの設定
           command: npm install --force
       - run:
           name: Run Test # UIとE2E以外のテストを実行
-          command: npm test -- src/03_getting_started_jest src/04_assertion src/06_group src/07_mock
+          command: |
+            TEST_FILES=$(npx jest --listTests src/03_getting_started_jest src/04_assertion src/06_group src/07_mock | circleci tests split)
+            echo $TEST_FILES
+            npm test -- $TEST_FILES
       - store_test_results: # テスト結果をアップロード
           path: reports
 

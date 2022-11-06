@@ -21,7 +21,9 @@ jobs: # ジョブの設定
           command: |
             npm test -- --shard=$(($CIRCLE_NODE_INDEX+1))/$CIRCLE_NODE_TOTAL src/03_getting_started_jest src/04_assertion src/06_group src/07_mock
       - store_test_results: # テスト結果をアップロード
-          path: reports
+          path: reports/jest
+      - store_artifacts: # カバレッジをアップロード
+          path: reports/coverage
 
 workflows: # ワークフローの設定
   test:

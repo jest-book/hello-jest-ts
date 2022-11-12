@@ -11,7 +11,7 @@ jobs: # ジョブの設定
             - node-v1-{{ checksum "package-lock.json" }}
       - run:
           name: Install node packages # 依存関係のインストール
-          command: npm install --force
+          command: npm install
       - save_cache:
           paths:
             - ./node_modules

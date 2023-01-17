@@ -18,10 +18,13 @@ describe('e2e test with puppeteer', () => {
 
     // 検索ボックスの要素を探し、puppeteerを入力しエンターキーをクリック
     await page.type('input[name="q"]', 'puppeteer')
-    await page.keyboard.press("Enter")
+    await page.keyboard.press('Enter')
 
     // ページのタイトルが`puppeteer - Google Search`に切り替わるまで待つ
-    await page.waitForNavigation({ timeout: 2000, waitUntil: 'domcontentloaded' })
+    await page.waitForNavigation({
+      timeout: 2000,
+      waitUntil: 'domcontentloaded',
+    })
     expect(await page.title()).toBe('puppeteer - Google Search')
   })
 })

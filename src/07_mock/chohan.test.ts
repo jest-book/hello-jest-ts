@@ -11,7 +11,8 @@ describe('chohan', () => {
   })
 
   it('return `丁` once then it returns `半`', () => {
-    Math.random = jest.fn()
+    Math.random = jest
+      .fn()
       .mockImplementationOnce(() => '0.2')
       .mockImplementationOnce(() => '0.1')
 

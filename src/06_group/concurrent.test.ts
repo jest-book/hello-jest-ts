@@ -1,5 +1,6 @@
 // 1秒後に`lemon`文字列を返します
-const fetchData = () => new Promise(resolve => setTimeout(resolve, 1000, 'lemon'))
+const fetchData = () =>
+  new Promise(resolve => setTimeout(resolve, 1000, 'lemon'))
 
 describe.skip('concurrent tests', () => {
   // n回数fetchDataを実行しテストする

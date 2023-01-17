@@ -3,7 +3,7 @@ jobs: # ジョブの設定
   test:
     docker:
       - image: cimg/node:16.17.0
-    parallelism: 2 # 並列数を2で実行
+    parallelism: 1 # 並列数を2で実行
     steps:
       - checkout # Githubからソースコードをチェックアウトする
       - restore_cache:
@@ -16,6 +16,9 @@ jobs: # ジョブの設定
           paths:
             - ./node_modules
           key: node-v1-{{ checksum "package-lock.json" }}
+      - run:
+          name: Run lint
+          command: npm run lint
       - run:
           name: Run Test # UIとE2E以外のテストを実行
           command: |

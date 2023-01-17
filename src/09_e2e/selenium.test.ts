@@ -17,7 +17,9 @@ describe('e2e test with selenium and chromeDriver', () => {
       ],
     })
 
-    chromeDriver = await new Builder().withCapabilities(chromeCapabilities).build() // Chromeを起動しWebDriverのインスタンスを取得
+    chromeDriver = await new Builder()
+      .withCapabilities(chromeCapabilities)
+      .build() // Chromeを起動しWebDriverのインスタンスを取得
   })
 
   afterAll(async () => {
@@ -28,9 +30,14 @@ describe('e2e test with selenium and chromeDriver', () => {
     // google.comにアクセス
     await chromeDriver.get('https://www.google.com/ncr')
     // 検索ボックスの要素を探し、webdriver`、エンターキーを入力
-    await chromeDriver.findElement(By.name('q')).sendKeys('webdriver', Key.RETURN)
+    await chromeDriver
+      .findElement(By.name('q'))
+      .sendKeys('webdriver', Key.RETURN)
     // ページのタイトルが`webdriver - Google Search`であることを確認
-    const results = await chromeDriver.wait(until.titleIs('webdriver - Google Search'), 10000)
+    const results = await chromeDriver.wait(
+      until.titleIs('webdriver - Google Search'),
+      10000,
+    )
     expect(results).toBe(true)
   })
 })
@@ -41,12 +48,12 @@ describe('e2e test with selenium and geckoDriver', () => {
   beforeAll(async () => {
     const fireFoxCapabilities = Capabilities.firefox()
     fireFoxCapabilities.set('moz:firefoxOptions', {
-      args: [
-        '-headless',
-      ],
+      args: ['-headless'],
     })
 
-    geckoDriver = await new Builder().withCapabilities(fireFoxCapabilities).build()
+    geckoDriver = await new Builder()
+      .withCapabilities(fireFoxCapabilities)
+      .build()
   })
 
   afterAll(async () => {
@@ -57,10 +64,14 @@ describe('e2e test with selenium and geckoDriver', () => {
     // google.comにアクセス
     await geckoDriver.get('https://www.google.com/ncr')
     // 検索ボックスの要素を探し、webdriver`、エンターキーを入力
-    await geckoDriver.findElement(By.name('q')).sendKeys('webdriver', Key.RETURN)
+    await geckoDriver
+      .findElement(By.name('q'))
+      .sendKeys('webdriver', Key.RETURN)
     // ページのタイトルが`webdriver - Google Search`であることを確認
-    const results = await geckoDriver.wait(until.titleIs('webdriver - Google Search'), 10000)
+    const results = await geckoDriver.wait(
+      until.titleIs('webdriver - Google Search'),
+      10000,
+    )
     expect(results).toBe(true)
   })
 })
-

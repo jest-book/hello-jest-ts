@@ -8,12 +8,10 @@ describe('simple ui test', () => {
   let document: Document
 
   beforeEach(() => {
-    document = (new JSDOM(html, { runScripts: 'dangerously' })).window.document
+    document = new JSDOM(html, { runScripts: 'dangerously' }).window.document
   })
 
-  test('ui test', () => { })
-
-  it('doesn\'t show a message at the initial state', () => {
+  it("doesn't show a message at the initial state", () => {
     const message = document.querySelector('#message > p') //message配下のpタグ要素を取得
     expect(message).toBe(null)
   })

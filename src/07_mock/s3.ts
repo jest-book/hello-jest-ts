@@ -1,17 +1,13 @@
-import * as AWS from "@aws-sdk/client-s3"
+import * as AWS from '@aws-sdk/client-s3'
 
 // v2API を利用しています。
 const s3Client = new AWS.S3({ apiVersion: '2006-03-01' })
 
-export const uploadJsonListToS3 = ({
-  jsonList,
-  s3BucketName,
-  path = '/',
-}) => {
+export const uploadJsonListToS3 = ({ jsonList, s3BucketName, path = '/' }) => {
   const requests = jsonList.map(json => {
     return s3Client.putObject({
       Bucket: s3BucketName,
-      Key: json.S3key,
+      Key: `${path}${json.s3Key}`,
       Body: json, // 本来であればstring型にする必要があります。
       ContentType: 'application/json; charset=utf-8',
       CacheControl: 'max-age=60',

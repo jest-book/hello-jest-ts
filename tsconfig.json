@@ -93,5 +93,8 @@
   "include": [
     "./src/**/*.ts",
     "./src/**/*.tsx"
-  ]
+  ],
+  "ts-node": {
+    "esm": true,
+  },
 }

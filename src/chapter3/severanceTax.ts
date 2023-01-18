@@ -5,7 +5,7 @@ const calculateRetirementIncomeDeduction = (serviceYears, retirementReason) => {
   const baseDeduction =
     serviceYears <= 20
       ? serviceYears * 400000
-      : 800000 + 700000 * (serviceYears - 20)
+      : 8000000 + 700000 * (serviceYears - 20)
 
   // 退職基因が障害者の場合（障害者となったことに直接基因して退職した）、100万円を加算
   const retirementReasonBenefit =
@@ -27,8 +27,8 @@ const calculateTaxableRetirementIncomeAmount = (
   let taxableRetirementIncomeAmount =
     retirementIncomeAmount - retirementIncomeDeduction
 
-  // taxableRetirementIncomeAmountが1000以下の場合に0を返す（1000円未満は切り捨て）
-  if (taxableRetirementIncomeAmount <= 1000) return 0
+  // taxableRetirementIncomeAmountが1000未満の場合に0を返す（1000円未満は切り捨て）
+  if (taxableRetirementIncomeAmount < 1000) return 0
 
   // 勤続年数が5年以下の従業員の場合、退職金の額から退職所得控除額を差し引いた残額の300万円以下の金額に対して、1/2を掛けた金額と300万円を超える金額を足した値が課税退職所得金額
   if (serviceYears <= 5 && role === 'employee') {

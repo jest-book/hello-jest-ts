@@ -11,7 +11,7 @@ describe('severanceTax', () => {
         incomeTaxAmount: 25000,
         retirementIncomeDeduction: 2000000,
         taxableRetirementIncomeAmount: 500000,
-        withholdingTaxAmount: 25524,
+        withholdingTaxAmount: 25525,
       },
     ],
     [
@@ -23,7 +23,7 @@ describe('severanceTax', () => {
         incomeTaxAmount: 15000,
         retirementIncomeDeduction: 2400000,
         taxableRetirementIncomeAmount: 300000,
-        withholdingTaxAmount: 15314,
+        withholdingTaxAmount: 15315,
       },
     ],
     [
@@ -83,7 +83,7 @@ describe('severanceTax', () => {
         incomeTaxAmount: 50000,
         retirementIncomeDeduction: 3000000,
         taxableRetirementIncomeAmount: 1000000,
-        withholdingTaxAmount: 51049,
+        withholdingTaxAmount: 51050,
       },
     ],
     [
@@ -95,7 +95,7 @@ describe('severanceTax', () => {
         incomeTaxAmount: 40000,
         retirementIncomeDeduction: 3400000,
         taxableRetirementIncomeAmount: 800000,
-        withholdingTaxAmount: 40839,
+        withholdingTaxAmount: 40840,
       },
     ],
     [
@@ -131,7 +131,7 @@ describe('severanceTax', () => {
         incomeTaxAmount: 50000,
         retirementIncomeDeduction: 8000000,
         taxableRetirementIncomeAmount: 1000000,
-        withholdingTaxAmount: 51049,
+        withholdingTaxAmount: 51050,
       },
     ],
     [

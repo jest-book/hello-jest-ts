@@ -69,10 +69,13 @@ const calculateIncomeTaxAmount = (
 // 源泉徴収税額の算出
 const calicurateWithholdingTaxAmount = incomeTaxAmount => {
   // 復興特別所得税率 2.1%
-  const specialIncomeTaxForReconstructionRate = 0.021
+  const calicurateSpecialIncomeTaxForReconstruction = (
+    incomeTaxAmount: number,
+  ) => (incomeTaxAmount / 1000) * 21
   // 源泉徴収税額=所得税額+復興特別所得税額
   const rawWithholdingTaxAmount =
-    incomeTaxAmount * (1 + specialIncomeTaxForReconstructionRate)
+    incomeTaxAmount +
+    calicurateSpecialIncomeTaxForReconstruction(incomeTaxAmount)
   // 1円未満の端数は切り捨て
   return Math.floor(rawWithholdingTaxAmount)
 }

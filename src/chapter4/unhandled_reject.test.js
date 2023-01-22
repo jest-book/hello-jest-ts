@@ -1,3 +1,4 @@
+/* eslint-disable */
 const fetchDataReject = () =>
   new Promise((resolve, reject) =>
     setTimeout(() => reject(new Error('Failed fetching data')), 1000, {}),

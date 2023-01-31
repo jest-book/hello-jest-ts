@@ -95,8 +95,179 @@ test('can2 and can4 are defferent class', () => {
   expect(can2).not.toStrictEqual(can4)
 })
 
-// Errorの評価
+// 曖昧な真偽値の評価
+test('"0" should be Truthy', () => {
+  expect('0').toBeTruthy()
+})
 
+test('0 should be Falsy', () => {
+  expect(0).toBeFalsy()
+})
+
+// null、undefinedの評価
+test('should be null', () => {
+  expect(null).toBe(null)
+  expect(null).toBeNull()
+})
+
+test('should be undefined', () => {
+  expect(undefined).toBe(undefined)
+  expect(undefined).toBeUndefined()
+})
+
+test('should be null or undefined', () => {
+  // eslint-disable-next-line prefer-const
+  let a // undefined
+  expect(a == null).toBe(true)
+  a = null // null
+  expect(a == null).toBe(true)
+})
+
+// 数値の評価
+
+// Number型がIEEE 754 倍精度浮動小数点数のため、小数点以下は２進数で計算されるため0.1 + 0.2 = 0.30000000000000004となる
+test('0.1 + 0.2 is not equal 0.3 due to Number type', () => {
+  expect(0.1 + 0.2).not.toBe(0.3)
+})
+
+// 小数点の誤差を許容した数値の評価
+test('0.1 + 0.2 returns 0.3', () => {
+  expect(0.1 + 0.2).toBeCloseTo(0.3) // デフォルトでは小数点以下２桁までを評価する
+})
+
+test('0.301 and 0.3 are different when numDigits is 3', () => {
+  expect(0.3 + 0.001).not.toBeCloseTo(0.3, 3) // 小数点３桁目まで評価する場合、0.3と0.301は異なると評価する
+})
+
+// toBeGreaterThan
+test('0.1 + 0.2 is greater than 0.3', () => {
+  expect(0.1 + 0.2).toBeGreaterThan(0.3)
+  expect(0.1 + 0.2 > 0.3).toBe(true)
+})
+// toBeGreaterThanOrEqual
+test('0.1 + 0.2 is greater than 0.3 or 0.1 + 0.2 equals to 0.30000000000000004', () => {
+  expect(0.1 + 0.2).toBeGreaterThanOrEqual(0.3)
+  expect(0.1 + 0.2).toBeGreaterThanOrEqual(0.30000000000000004)
+  expect(0.1 + 0.2 >= 0.3).toBe(true)
+  expect(0.1 + 0.2 >= 0.30000000000000004).toBe(true)
+})
+// toBeLessThan
+test('0.1+0.2 is less than 0.4', () => {
+  expect(0.1 + 0.2).toBeLessThan(0.4)
+  expect(0.1 + 0.2 < 0.4).toBe(true)
+})
+// toBeLessThanOrEqual
+test('0.1 + 0.2 is less than 0.4 or 0.1 + 0.2 equals to 0.30000000000000004', () => {
+  expect(0.1 + 0.2).toBeLessThanOrEqual(0.4)
+  expect(0.1 + 0.2).toBeLessThanOrEqual(0.30000000000000004)
+  expect(0.1 + 0.2 <= 0.4).toBe(true)
+  expect(0.1 + 0.2 <= 0.30000000000000004).toBe(true)
+})
+
+// 文字列の部分一致（正規表現）
+
+const log1 =
+  '10.0.0.3 - - [30/Jan/2023:12:20:12 +0000] "GET / HTTP/1.1" 200 615 "-" "curl/7.74.0" "-"'
+const log2 =
+  '10.0.0.11 - - [30/Jan/2023:12:20:40 +0000] "GET / HTTP/1.1" 200 615 "-" "curl/7.74.0" "-"'
+const log3 =
+  '10.0.0.99 - - [30/Jan/2023:12:20:40 +0000] "GET / HTTP/1.1" 200 615 "-" "curl/7.74.0" "-"'
+
+test('contains 10.0.0.3 IP address', () => {
+  expect(log1).toEqual(expect.stringContaining('10.0.0.3'))
+})
+
+test('contain IP address between 10.0.0.0 and 10.0.0.99', () => {
+  // 10.0.0.0から10.0.0.99までのIPアドレスにマッチするための正規表現
+  const expected = /^10.0.0.([1-9]?[0-9]) /
+
+  // expect.stringMatching
+  expect(log1).toEqual(expect.stringMatching(expected))
+  expect(log2).toEqual(expect.stringMatching(expected))
+  expect(log3).toEqual(expect.stringMatching(expected))
+
+  // toMatch
+  expect(log1).toMatch(expected)
+  expect(log2).toMatch(expected)
+  expect(log3).toMatch(expected)
+
+  // toBe
+  const regex = new RegExp(expected)
+  expect(regex.test(log1)).toBe(true)
+  expect(regex.test(log2)).toBe(true)
+  expect(regex.test(log3)).toBe(true)
+})
+
+// 配列の部分一致
+
+// プリミティブ型の場合
+const fruitList = ['Apple', 'Lemon', 'Orange']
+
+// １つの要素が含まれていることを検証
+test('contains Apple in fruitList', () => {
+  expect(fruitList).toContain('Apple')
+})
+
+// 複数の要素が含まれていることを検証
+test('contains Apple and Orange in fruitList', () => {
+  expect(fruitList).toEqual(expect.arrayContaining(['Apple', 'Orange']))
+})
+
+// オブジェクト型の場合
+const itemList = [
+  { name: 'Apple', price: 100 },
+  { name: 'Lemon', price: 150 },
+  { name: 'Orange', price: 120 },
+]
+
+// １つの要素が含まれていることを検証
+test('contains Apple in itemList', () => {
+  expect(itemList).toContainEqual({ name: 'Apple', price: 100 })
+})
+
+// 複数の要素が含まれていることを検証
+test('contains Apple and Orange', () => {
+  expect(itemList).toEqual(
+    expect.arrayContaining([
+      { name: 'Apple', price: 100 },
+      { name: 'Orange', price: 120 },
+    ]),
+  )
+})
+
+// オブジェクトの部分一致
+
+const ciBuild = {
+  number: 1,
+  dulation: 12000,
+  state: 'success',
+  triggerParameters: {
+    is_sucheduled: true,
+  },
+  type: 'scheduled_pipeline',
+  actor: {
+    login: 'Taka',
+  },
+}
+
+test('build state should be success', () => {
+  expect(ciBuild).toHaveProperty('state', 'success')
+})
+
+test('actor should be Taka', () => {
+  expect(ciBuild).toHaveProperty('actor.login', 'Taka')
+})
+
+test('trigered by the scheduled pipeline', () => {
+  expect(ciBuild).toEqual(
+    expect.objectContaining({
+      triggerParameters: expect.objectContaining({ is_sucheduled: true }),
+      type: 'scheduled_pipeline',
+    }),
+  )
+})
+
+// Errorの評価
 class User {
   name: string
   password: string

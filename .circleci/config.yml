@@ -22,7 +22,7 @@ jobs: # ジョブの設定
       - run:
           name: Run Test # UIとE2E以外のテストを実行
           command: |
-            npm test -- --shard=$(($CIRCLE_NODE_INDEX+1))/$CIRCLE_NODE_TOTAL src/03_getting_started_jest src/04_assertion src/06_group src/07_mock
+            npm test -- --shard=$(($CIRCLE_NODE_INDEX+1))/$CIRCLE_NODE_TOTAL src/chapter2/03_getting_started_jest src/chapter2/04_assertion src/chapter2/06_group src/chapter2/07_mock
       - store_test_results: # テスト結果をアップロード
           path: reports/jest
       - store_artifacts: # カバレッジをアップロード

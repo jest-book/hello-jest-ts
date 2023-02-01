@@ -85,6 +85,23 @@ test('can1 and can2 have the same properties', () => {
   expect(can1).toEqual(can2)
 })
 
+// toEqualとtoStrictEqualの違い
+test('differences between toEqual and toStrictEqual', () => {
+  // undefinedを持つプロパティはtoEqualでは無視される
+  expect({ foo: NaN, bar: undefined }).toEqual({ foo: NaN })
+
+  // undefinedを持つプロパティはtoStrictEqualでは一致しないと評価する
+  expect({ foo: NaN, bar: undefined }).not.toStrictEqual({ foo: NaN })
+
+  // undefinedやemptyを持つArrayはtoEqualでは同じと評価される
+  // eslint-disable-next-line no-sparse-arrays
+  expect([, undefined, 1]).toEqual([undefined, , 1])
+
+  // undefinedやemptyを持つArrayはtoEqualでは同じと評価される
+  // eslint-disable-next-line no-sparse-arrays
+  expect([, undefined, 1]).not.toStrictEqual([undefined, , 1])
+})
+
 // can2 と can4 は等しいと評価される
 test('can2 and can4 have the same properties', () => {
   expect(can2).toEqual(can4)

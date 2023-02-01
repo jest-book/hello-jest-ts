@@ -123,6 +123,26 @@ test('should be null or undefined', () => {
   expect(a == null).toBe(true)
 })
 
+// 曖昧な結果の評価
+const hoge = () => ({ hoge: 'hogehoge', number: 0 })
+
+test('hoge return anything', () => {
+  // 期待値がnullやundefinedではないことを評価
+  expect(hoge()).toEqual(expect.anything())
+
+  // 期待値の一部のプロパティがnullやundefinedではないことを評価
+  expect(hoge()).toEqual({
+    hoge: 'hogehoge',
+    number: expect.anything(),
+  })
+
+  // 期待値の一部のプロパティnumberがNumber型であることを評価
+  expect(hoge()).toEqual({
+    hoge: 'hogehoge',
+    number: expect.any(Number),
+  })
+})
+
 // 数値の評価
 
 // Number型がIEEE 754 倍精度浮動小数点数のため、小数点以下は２進数で計算されるため0.1 + 0.2 = 0.30000000000000004となる

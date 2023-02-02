@@ -1,38 +1,49 @@
+// ---------------------------------
 // testとitを利用したテストケースの作成
+// ---------------------------------
 
 test('testを利用してテストケースを作成する', () => {
-  expect(true).toBe(true) // expect関数を利用し結果の評価を行う
+  const result = true // テスト結果
+  const expected = true // 期待値
+  expect(result).toBe(expected) // expect関数とtoBe関数を利用して結果を評価する
 })
 
 it('itを利用してテストケースを作成する', () => {
   expect(true).toBe(true)
 })
 
+// ---------------------------------
 // プリミティブな値の評価
+// ---------------------------------
 
 const numberValue = 0
 const stringValue = '文字列'
 const booleanValue = true
 
-test('premitive values eqaul to the same values with toBe', () => {
+// toBeでプリミティブな値を評価
+test('evaluates as equal for all the same primitive values when using the toBe function', () => {
   expect(numberValue).toBe(0)
   expect(stringValue).toBe('文字列')
   expect(booleanValue).toBe(true)
 })
 
-test('premitive values equal the same values with toEqual', () => {
+// toEqualでプリミティブな値を評価
+test('evaluates as equal for all the same primitive values when using the toEqual function', () => {
   expect(numberValue).toEqual(0)
   expect(stringValue).toEqual('文字列')
   expect(booleanValue).toEqual(true)
 })
 
-test('premitive values equal the same values with toStrictEqual', () => {
+// toStrictEqualでプリミティブな値を評価
+test('evaluates as equal for all the same primitive values when using the toStrictEqual function', () => {
   expect(numberValue).toStrictEqual(0)
   expect(stringValue).toStrictEqual('文字列')
   expect(booleanValue).toStrictEqual(true)
 })
 
+// ---------------------------------
 // オブジェクトの評価
+// ---------------------------------
 
 // canの型を定義
 type CanType = {
@@ -54,6 +65,7 @@ const can2: CanType = {
 // can3はcan2の参照を持つ
 const can3: CanType = can2
 
+// Canクラス
 class Can {
   flavor: string
   ounces: number
@@ -64,11 +76,15 @@ class Can {
   }
 }
 
-// Canクラスでcan4を作成
+// can4はCanクラスで生成されたオブジェクトでcan1、can2と同じプロパティを持つ
 const can4 = new Can({
   flavor: 'grapefruit',
   ounces: 12,
 })
+
+// ---------------------------------
+// toBe関数を利用したオブジェクトの評価
+// ---------------------------------
 
 // can1 と can2 は異なると評価される
 test('can1 and can2 are not the exact same instance', () => {
@@ -80,10 +96,23 @@ test('can2 and can3 are the same instance', () => {
   expect(can2).toBe(can3)
 })
 
+// ---------------------------------
+// toEqual関数を利用したオブジェクトの評価
+// ---------------------------------
+
 // can1 と can2 は等しいと評価される
 test('can1 and can2 have the same properties', () => {
   expect(can1).toEqual(can2)
 })
+
+// can2 と can4 は等しいと評価される
+test('can2 and can4 have the same properties', () => {
+  expect(can2).toEqual(can4)
+})
+
+// ---------------------------------
+// 生成元のクラスを考慮する以外のtoStrictEqualとtoEqualの違い
+// ---------------------------------
 
 // toEqualとtoStrictEqualの違い
 test('differences between toEqual and toStrictEqual', () => {
@@ -102,17 +131,19 @@ test('differences between toEqual and toStrictEqual', () => {
   expect([, undefined, 1]).not.toStrictEqual([undefined, , 1])
 })
 
-// can2 と can4 は等しいと評価される
-test('can2 and can4 have the same properties', () => {
-  expect(can2).toEqual(can4)
-})
+// ---------------------------------
+// toStrictEqualを利用したオブジェクトの評価
+// ---------------------------------
 
 // can2 と can4 は等しくないと評価される
 test('can2 and can4 are defferent class', () => {
   expect(can2).not.toStrictEqual(can4)
 })
 
-// 曖昧な真偽値の評価
+// ---------------------------------
+// toBeTruthyとtoBeFalsyを利用した値の評価
+// ---------------------------------
+
 test('"0" should be Truthy', () => {
   expect('0').toBeTruthy()
 })
@@ -121,7 +152,10 @@ test('0 should be Falsy', () => {
   expect(0).toBeFalsy()
 })
 
+// ---------------------------------
 // null、undefinedの評価
+// ---------------------------------
+
 test('should be null', () => {
   expect(null).toBe(null)
   expect(null).toBeNull()
@@ -140,7 +174,10 @@ test('should be null or undefined', () => {
   expect(a == null).toBe(true)
 })
 
+// ---------------------------------
 // 曖昧な結果の評価
+// ---------------------------------
+
 const hoge = () => ({ hoge: 'hogehoge', number: 0 })
 
 test('hoge return anything', () => {
@@ -160,14 +197,19 @@ test('hoge return anything', () => {
   })
 })
 
-// 数値の評価
+// ---------------------------------
+// 小数点の計算で意図した結果にならない例
+// ---------------------------------
 
 // Number型がIEEE 754 倍精度浮動小数点数のため、小数点以下は２進数で計算されるため0.1 + 0.2 = 0.30000000000000004となる
-test('0.1 + 0.2 is not equal 0.3 due to Number type', () => {
+test('0.1 + 0.2 is not equal 0.3 due to IEEE 754 specification', () => {
   expect(0.1 + 0.2).not.toBe(0.3)
 })
 
+// ---------------------------------
 // 小数点の誤差を許容した数値の評価
+// ---------------------------------
+
 test('0.1 + 0.2 returns 0.3', () => {
   expect(0.1 + 0.2).toBeCloseTo(0.3) // デフォルトでは小数点以下２桁までを評価する
 })
@@ -175,6 +217,10 @@ test('0.1 + 0.2 returns 0.3', () => {
 test('0.301 and 0.3 are different when numDigits is 3', () => {
   expect(0.3 + 0.001).not.toBeCloseTo(0.3, 3) // 小数点３桁目まで評価する場合、0.3と0.301は異なると評価する
 })
+
+// ---------------------------------
+// 数値の比較
+// ---------------------------------
 
 // toBeGreaterThan
 test('0.1 + 0.2 is greater than 0.3', () => {
@@ -201,7 +247,9 @@ test('0.1 + 0.2 is less than 0.4 or 0.1 + 0.2 equals to 0.30000000000000004', ()
   expect(0.1 + 0.2 <= 0.30000000000000004).toBe(true)
 })
 
+// ---------------------------------
 // 文字列の部分一致（正規表現）
+// ---------------------------------
 
 const log1 =
   '10.0.0.3 - - [30/Jan/2023:12:20:12 +0000] "GET / HTTP/1.1" 200 615 "-" "curl/7.74.0" "-"'
@@ -235,7 +283,9 @@ test('contain IP address between 10.0.0.0 and 10.0.0.99', () => {
   expect(regex.test(log3)).toBe(true)
 })
 
+// ---------------------------------
 // 配列の部分一致
+// ---------------------------------
 
 // プリミティブ型の場合
 const fruitList = ['Apple', 'Lemon', 'Orange']
@@ -272,7 +322,9 @@ test('contains Apple and Orange', () => {
   )
 })
 
+// ---------------------------------
 // オブジェクトの部分一致
+// ---------------------------------
 
 const ciBuild = {
   number: 1,
@@ -304,7 +356,11 @@ test('trigered by the scheduled pipeline', () => {
   )
 })
 
+// ---------------------------------
 // Errorの評価
+// ---------------------------------
+
+// Userクラスを定義
 class User {
   name: string
   password: string
@@ -317,6 +373,7 @@ class User {
   }
 }
 
+// パスワードが6文字未満の場合にErrorがthrowされる
 test('creates a new user with a 6-charactors password', () => {
   expect(new User({ name: 'hoge', password: '123456' })).toEqual({
     name: 'hoge',
@@ -332,7 +389,9 @@ test('throw Error when the length of password is less than 6', () => {
   ) //エラーメッセージのチェック
 })
 
-// .resolves/.rejects を利用したPromiseを返す非同期関数の評価
+// ---------------------------------
+// Callback 関数を利用した非同期な関数の結果の評価
+// ---------------------------------
 
 const fetchDataWithCallback = callback => {
   setTimeout(callback, 3000, 'lemon') // 3秒経ってから`lemon`という文字列を返す
@@ -346,19 +405,40 @@ test('return lemon', done => {
   fetchDataWithCallback(callback)
 })
 
+// ---------------------------------
+// Promise を利用した非同期な関数の結果の評価
+// ---------------------------------
+
+// .resolveを利用したPrmiose.resolveを返す関数の結果の評価
 const fetchDataWithPromiseResolve = () =>
   new Promise(resolve => setTimeout(resolve, 1000, 'lemon'))
 
+// .resolvesを利用して成功時の値を受け取る
 test('return lemon', () => {
   return expect(fetchDataWithPromiseResolve()).resolves.toBe('lemon')
 })
 
-test('return lemon by using async/await', async () => {
+// async/awaitを利用
+test('return lemon with async/await', async () => {
   await expect(fetchDataWithPromiseResolve()).resolves.toBe('lemon')
 })
 
-const fetchDataWithPromiseReject = () => Promise.reject(new Error('not exist'))
+// .rejects関数を利用した非同期な関数の例外処理の評価
+const fetchDataWithPromiseReject = () =>
+  new Promise((resolve, reject) =>
+    setTimeout(reject, 1000, new Error('lemon does not exist')),
+  )
 
-test('return Promise.reject', () => {
-  return expect(fetchDataWithPromiseReject()).rejects.toThrow('not exist')
+// .rejectsを利用して失敗時の値を受け取る
+test('failed to return lemon', () => {
+  return expect(fetchDataWithPromiseReject()).rejects.toThrow(
+    'lemon does not exist',
+  )
+})
+
+// async/awaitを利用
+test('failed to return lemon', async () => {
+  await expect(fetchDataWithPromiseReject()).rejects.toThrow(
+    'lemon does not exist',
+  )
 })

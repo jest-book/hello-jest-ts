@@ -1,4 +1,4 @@
-import { sum } from '../03_getting_started_jest/sum'
+import { sum } from '../getting_started_jest/sum'
 
 describe('one test case', () => {
   test('sum', () => {

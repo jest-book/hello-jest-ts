@@ -16,17 +16,25 @@ describe('グループ名', () => {
   })
 })
 
+// グループ１
 describe('before/after timing', () => {
+  // グループ１の前後処理
   beforeAll(() => console.log('1 - beforeAll'))
   afterAll(() => console.log('1 - afterAll'))
   beforeEach(() => console.log('1 - beforeEach'))
   afterEach(() => console.log('1 - afterEach'))
-  test('', () => console.log('1 - test')) // テスト1
+  // グループ１のテスト１
+  test('', () => console.log('1 - test1'))
+  // グループ２
   describe('Scoped / Nested block', () => {
+    // グループ２の前後処理
     beforeAll(() => console.log('2 - beforeAll'))
     afterAll(() => console.log('2 - afterAll'))
     beforeEach(() => console.log('2 - beforeEach'))
     afterEach(() => console.log('2 - afterEach'))
-    test('', () => console.log('2 - test')) // テスト2
+    // グループ２のテスト１
+    test('', () => console.log('2 - test1'))
+    // グループ２のテスト２
+    test('', () => console.log('2 - test2'))
   })
 })

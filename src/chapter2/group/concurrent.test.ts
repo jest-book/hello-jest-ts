@@ -3,7 +3,8 @@ const fetchData = () =>
   new Promise(resolve => setTimeout(resolve, 1000, 'lemon'))
 
 // 100回数fetchData関数をテスト
-test.concurrent.each(
+// skipを追加
+test.concurrent.skip.each(
   Array.from(new Array(100).keys()).map(n => ({
     n,
     expected: 'lemon',

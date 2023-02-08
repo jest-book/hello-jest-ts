@@ -1,7 +1,7 @@
-import puppeteer from 'puppeteer'
+import puppeteer, { Browser } from 'puppeteer'
 
 describe('e2e test with puppeteer', () => {
-  let browser: puppeteer.Browser
+  let browser: Browser
 
   beforeAll(async () => {
     browser = await puppeteer.launch()

@@ -1,9 +1,16 @@
-import { Builder, By, Key, until, Capabilities } from 'selenium-webdriver'
+import {
+  WebDriver,
+  Builder,
+  By,
+  Key,
+  until,
+  Capabilities,
+} from 'selenium-webdriver'
 
 jest.setTimeout(20000) // タイムアウトを20秒に延長
 
 describe('e2e test with selenium and chromeDriver', () => {
-  let chromeDriver: Builder = {}
+  let chromeDriver: WebDriver
 
   beforeAll(async () => {
     const chromeCapabilities = Capabilities.chrome()
@@ -43,7 +50,7 @@ describe('e2e test with selenium and chromeDriver', () => {
 })
 
 describe('e2e test with selenium and geckoDriver', () => {
-  let geckoDriver: Builder = {}
+  let geckoDriver: WebDriver
 
   beforeAll(async () => {
     const fireFoxCapabilities = Capabilities.firefox()

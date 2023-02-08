@@ -1,24 +1,18 @@
-/**
- * @jest-environment node
- */
-
 jest.setTimeout(10000)
 
-import playwright, { Browser, Page } from 'playwright'
-import fs from 'fs'
-import path from 'path'
+import { Browser, Page, chromium, firefox, webkit } from 'playwright'
 
 describe.each([
-  { browserType: 'chromium' },
-  { browserType: 'firefox' },
-  { browserType: 'webkit' },
-])('e2e test with playwright and $browserType', ({ browserType }) => {
+  { browserType: chromium, browserName: 'chromium' },
+  { browserType: firefox, browserName: 'firefox' },
+  { browserType: webkit, browserName: 'webkit' },
+])('e2e test with playwright and $browserName', ({ browserType }) => {
   let browser: Browser
   let page: Page
 
   beforeAll(async () => {
-    browser = await playwright[browserType].launch() // ブラウザの起動
-    // browser = await playwright[browserType].launch({ headless: false }) // 実際にブラウザの挙動を見たい場合はheadlessを無効化する
+    browser = await browserType.launch() // ブラウザの起動
+    // browser = await browserType.launch({ headless: false }) // 実際にブラウザの挙動を見たい場合はheadlessモードを無効化する
   })
 
   afterAll(async () => {
@@ -31,32 +25,6 @@ describe.each([
         dir: 'videos',
       },
     }) // 新しいページを立ち上げる
-  })
-  afterEach(async () => {
-    // 記号や空白を_(アンダーバー)へ置換
-    const testName = expect.getState().currentTestName.replace(/\W/g, '_')
-    // テストファイルからディレクトリ名を取得
-    const parsedTestPath = expect
-      .getState()
-      .testPath.match(/\/hello-jest-ts\/src\/(?<testDirectory>[\w]+)\//)
-    const testDirectory = parsedTestPath
-      ? path.resolve(
-          __dirname,
-          `../../videos/${parsedTestPath.groups?.testDirectory}`,
-        )
-      : ''
-
-    const videoPath = await page.video()?.path() // 動画のファイルのパスを取得
-    await page.close() // ページを終了する
-
-    // testDirectoryが生成できていない場合は rename をしない
-    if (testDirectory) {
-      // ディレクトリを作成
-      if (!fs.existsSync(testDirectory)) fs.mkdirSync(testDirectory)
-      // 動画のファイル名を変更
-      if (videoPath)
-        fs.renameSync(videoPath, `${testDirectory}/${testName}.webm`)
-    }
   })
 
   it('a search keyword will be on the page title in google.com', async () => {

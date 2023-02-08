@@ -11,11 +11,13 @@ describe('simple ui test', () => {
     document = new JSDOM(html, { runScripts: 'dangerously' }).window.document
   })
 
+  // ボタンがクリックされていない場合に、「message」が表示されていないこと
   it("doesn't show a message at the initial state", () => {
     const message = document.querySelector('#message > p') //message配下のpタグ要素を取得
     expect(message).toBe(null)
   })
 
+  // ボタンがクリックされたら、「You Passed!!!」が表示されること
   it('shows a message after clicking the button', () => {
     const button = document.querySelector('#showMessage') // showMessageボタンの要素を取得
     const click = document.createEvent('Event')
@@ -26,6 +28,7 @@ describe('simple ui test', () => {
     expect(message?.textContent).toBe('You Passed!!!')
   })
 
+  // ボタンが2回クリックされても、「You Passed!!!」が1つしか表示されないこと
   it('shows only one message after clicking the button twice', () => {
     const button = document.querySelector('#showMessage')
     const click = document.createEvent('Event')

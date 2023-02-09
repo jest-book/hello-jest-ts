@@ -1,5 +1,5 @@
 /* eslint-disable */
-const Greeter = require('./Greeter.js')
+import { Greeter } from './Greeter'
 
 describe('Greeter', () => {
   it.each([

@@ -1,8 +1,6 @@
 /* eslint-disable */
-class Greeter {
+export class Greeter {
   greet(name) {
     return `Hello ${name}`
   }
 }
-
-module.exports = Greeter

@@ -30,37 +30,59 @@ jobs: # ジョブの設定
           path: reports/jest
       - store_artifacts: # カバレッジをアップロード
           path: reports/coverage
-
-# 検証用
+  # 検証用
   ui-test:
     docker:
       - image: cimg/node:18.14.0
-    parallelism: 1 # 並列数を2で実行
+    parallelism: 1
     steps:
-      - checkout # Githubからソースコードをチェックアウトする
+      - checkout
       - restore_cache:
           keys:
-            - node-v1-{{ checksum "package-lock.json" }}
+            - node-v2-{{ checksum "package-lock.json" }}
       - run:
           name: Install node packages # 依存関係のインストール
           command: npm install
       - save_cache:
           paths:
             - ./node_modules
-          key: node-v1-{{ checksum "package-lock.json" }}
+          key: node-v2-{{ checksum "package-lock.json" }}
       - run:
           name: Run lint
           command: npm run lint
+      - run:
+          name: apt update
+          command: sudo apt update
       - browser-tools/install-chrome:
-          chrome-version: 110.0.5481.77
+          chrome-version: "110.0.5481.77"
       - browser-tools/install-firefox:
-          version: 109.0.1
+          version: "109.0.1"
       - run:
           name: Run UI Test
-          command: npm test -- src/chapter2/ui src/chapter2/e2e
+          command: npm test -- src/chapter2/ui src/chapter2/e2e/puppeteer.test.ts src/chapter2/e2e/selenium.test.ts
+  playwright-test:
+    docker:
+      - image: mcr.microsoft.com/playwright:v1.30.0-focal
+    parallelism: 1
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-v2-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install node packages
+          command: npm install
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: node-v2-{{ checksum "package-lock.json" }}
+      - run:
+          name: Run UI Test
+          command: npm test -- src/chapter2/e2e/playwright.test.ts
 
 workflows: # ワークフローの設定
   test:
     jobs:
       - test
       - ui-test
+      - playwright-test

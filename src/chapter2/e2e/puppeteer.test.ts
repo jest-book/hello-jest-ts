@@ -4,7 +4,13 @@ describe('e2e test with puppeteer', () => {
   let browser: Browser
 
   beforeAll(async () => {
-    browser = await puppeteer.launch()
+    if (process.env.CI) {
+      browser = await puppeteer.launch({
+        executablePath: 'google-chrome-stable',
+      })
+    } else {
+      browser = await puppeteer.launch()
+    }
   })
 
   afterAll(async () => {

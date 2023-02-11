@@ -10,13 +10,23 @@
   },
   "scripts": {
     "lint": "eslint src",
-    "test": "jest"
+    "test": "jest",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.20.12",
+    "@storybook/addon-actions": "6.5.16",
+    "@storybook/addon-essentials": "6.5.16",
+    "@storybook/addon-interactions": "6.5.16",
+    "@storybook/addon-links": "6.5.16",
+    "@storybook/builder-webpack4": "6.5.16",
+    "@storybook/manager-webpack4": "6.5.16",
+    "@storybook/react": "6.5.16",
+    "@storybook/testing-library": "0.0.13",
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.4.0",
     "@types/node": "^18.13.0",

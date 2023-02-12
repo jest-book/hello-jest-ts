@@ -1,27 +1,28 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars */
 
 const doSomethingAsync = () => {
   return new Promise((resolve, reject) => {
     // 非同期の処理が成功したときはresolve()を呼ぶ
-    setTimeout(() => { resolve(true) }, 1000)
+    setTimeout(() => {
+      resolve(true)
+    }, 1000)
     // 非同期の処理が失敗したときにはreject()を呼ぶ
     // setTimeout(() => { reject(false) }, 1000)
   })
 }
 
-const successCallback = () => { console.log('成功した') }
-const failureCallback = () => { console.log('失敗した') }
+const successCallback = () => {
+  console.log('成功した')
+}
+const failureCallback = () => {
+  console.log('失敗した')
+}
 
 // thenとcatchを利用した例
-doSomethingAsync()
-  .then(successCallback)
-  .catch(failureCallback)
+doSomethingAsync().then(successCallback).catch(failureCallback)
 
 // thenのみを利用した例
-doSomethingAsync()
-  .then(successCallback, failureCallback)
-
+doSomethingAsync().then(successCallback, failureCallback)
 
 // コールバックでネストを繰り返した例
 const task = (callback, name, total) => {
@@ -32,6 +33,7 @@ const task = (callback, name, total) => {
   }, 1000)
 }
 
+// prettier-ignore
 task(total => {
   task(total => {
     task(total => {

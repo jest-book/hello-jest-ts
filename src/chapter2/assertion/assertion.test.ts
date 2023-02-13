@@ -211,11 +211,11 @@ test('0.1 + 0.2 is not equal 0.3 due to IEEE 754 specification', () => {
 // ---------------------------------
 
 test('0.1 + 0.2 returns 0.3', () => {
-  expect(0.1 + 0.2).toBeCloseTo(0.3) // デフォルトでは小数点以下２桁までを評価する
+  expect(0.1 + 0.2).toBeCloseTo(0.3) // デフォルトでは小数点以下2桁までを評価する
 })
 
 test('0.301 and 0.3 are different when numDigits is 3', () => {
-  expect(0.3 + 0.001).not.toBeCloseTo(0.3, 3) // 小数点３桁目まで評価する場合、0.3と0.301は異なると評価する
+  expect(0.3 + 0.001).not.toBeCloseTo(0.3, 3) // 小数点3桁目まで評価する場合、0.3と0.301は異なると評価する
 })
 
 // ---------------------------------
@@ -290,7 +290,7 @@ test('contain IP address between 10.0.0.0 and 10.0.0.99', () => {
 // プリミティブ型の場合
 const fruitList = ['Apple', 'Lemon', 'Orange']
 
-// １つの要素が含まれていることを検証
+// 1つの要素が含まれていることを検証
 test('contains Apple in fruitList', () => {
   expect(fruitList).toContain('Apple')
 })
@@ -307,7 +307,7 @@ const itemList = [
   { name: 'Orange', price: 120 },
 ]
 
-// １つの要素が含まれていることを検証
+// 1つの要素が含まれていることを検証
 test('contains Apple in itemList', () => {
   expect(itemList).toContainEqual({ name: 'Apple', price: 100 })
 })
@@ -339,14 +339,17 @@ const ciBuild = {
   },
 }
 
+// 1つのプロパティを検証
 test('build state should be success', () => {
   expect(ciBuild).toHaveProperty('state', 'success')
 })
 
+// ネストしたプロパティを検証
 test('actor should be Taka', () => {
   expect(ciBuild).toHaveProperty('actor.login', 'Taka')
 })
 
+// 複数のプロパティを検証
 test('trigered by the scheduled pipeline', () => {
   expect(ciBuild).toEqual(
     expect.objectContaining({

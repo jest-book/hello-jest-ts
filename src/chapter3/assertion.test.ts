@@ -5,16 +5,17 @@ const foo = () => ({
   },
 })
 
+// 改善前
 // test('foo', () => {
 //   const result = foo()
 
-//   // １つのオブジェクトに対して複数のチェックを行っている
+//   // 1つのオブジェクトに対して複数のチェックを行っている
 //   expect(result).toHaveProperty('bar')
 //   expect(result['bar']).toHaveProperty('status')
 //   expect(result['bar'].status).toBe('apply')
 // })
 
-// 改善版
+// 改善後
 test('foo', () => {
   const result = foo()
 

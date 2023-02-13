@@ -5,8 +5,8 @@ jest.mock('./seed', () => {
   return {
     seed: jest
       .fn()
-      .mockImplementationOnce(() => 2) // １度目に偶数を返す
-      .mockImplementationOnce(() => 1), // ２度目に奇数を返す
+      .mockImplementationOnce(() => 2) // 1度目に偶数を返す
+      .mockImplementationOnce(() => 1), // 2度目に奇数を返す
   }
 })
 

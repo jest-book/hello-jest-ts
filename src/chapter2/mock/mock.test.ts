@@ -49,14 +49,14 @@ describe('jest.fn()', () => {
 })
 
 describe('Matchers for mock.calls', () => {
-  // mockFunctionは１回以上呼び出された
+  // mockFunctionは1回以上呼び出された
   test('mockFunction calls once', () => {
     const mockFunction = jest.fn()
     mockFunction()
     expect(mockFunction).toHaveBeenCalled()
   })
 
-  // mockFunctionは２回呼び出された
+  // mockFunctionは2回呼び出された
   test('mockFunction calls twice', () => {
     const mockFunction = jest.fn()
     mockFunction()
@@ -64,7 +64,7 @@ describe('Matchers for mock.calls', () => {
     expect(mockFunction).toHaveBeenCalledTimes(2)
   })
 
-  // １回目にmockFunctionが実行された際の引数が'hoge'である
+  // 1回目にmockFunctionが実行された際の引数が'hoge'である
   test('mockFunction calls with `hello` at the first time', () => {
     const mockFunction = jest.fn()
     mockFunction('hello')
@@ -82,12 +82,73 @@ describe('Matchers for mock.calls', () => {
     expect(mockFunction).toHaveBeenLastCalledWith('goodbye')
   })
 
-  // ２回目にmockFunctionが実行された際の引数が'hoge'である
+  // 2回目にmockFunctionが実行された際の引数が'hoge'である
   test('mockFunction calls with `hoge` at the second time', () => {
     const mockFunction = jest.fn()
     mockFunction('hello')
     mockFunction('hoge')
     mockFunction('goodbye')
     expect(mockFunction).toHaveBeenNthCalledWith(2, 'hoge')
+  })
+})
+
+describe('Matchers for mock.returns', () => {
+  // mockFunctionは1度以上正常終了した
+  test('mockFunction returns once', () => {
+    const mockFunction = jest
+      .fn()
+      .mockImplementationOnce(() => 'Hello')
+      .mockImplementationOnce(() => {
+        throw new Error('hoge')
+      })
+    try {
+      mockFunction() // 正常終了する
+      mockFunction() // Errorがthrowされる
+    } catch {
+      // 1度以上正常終了しているので正しいと評価される
+      expect(mockFunction).toHaveReturned()
+    }
+  })
+
+  // mockFunctionは2回正常終了した
+  test('mockFunction returns twice', () => {
+    const mockFunction = jest.fn()
+    mockFunction()
+    mockFunction()
+    expect(mockFunction).toHaveReturnedTimes(2)
+  })
+
+  // 1回目にmockFunctionが実行された際の返り値が'hoge'である
+  test('mockFunction returns `hello` at the first time', () => {
+    const mockFunction = jest.fn().mockImplementationOnce(() => 'hello')
+    mockFunction() // returns 'hello'
+    mockFunction() // returns undefined
+    mockFunction() // returns undefined
+    expect(mockFunction).toHaveReturnedWith('hello')
+  })
+  // 最後にmockFunctionが実行された際の返り値が'goodbye'である
+  test('mockFunction calls with `goodbye` at the last time', () => {
+    const mockFunction = jest
+      .fn()
+      .mockImplementationOnce(() => 'hello')
+      .mockImplementationOnce(() => 'hoge')
+      .mockImplementationOnce(() => 'goodbye')
+    mockFunction() // returns 'hello'
+    mockFunction() // returns 'hoge'
+    mockFunction() // returns 'goodbye'
+    expect(mockFunction).toHaveLastReturnedWith('goodbye')
+  })
+
+  // 2回目にmockFunctionが実行された際の返り値が'hoge'である
+  test('mockFunction calls with `hoge` at the second time', () => {
+    const mockFunction = jest
+      .fn()
+      .mockImplementationOnce(() => 'hello')
+      .mockImplementationOnce(() => 'hoge')
+      .mockImplementationOnce(() => 'goodbye')
+    mockFunction() // returns 'hello'
+    mockFunction() // returns 'hoge'
+    mockFunction() // returns 'goodbye'
+    expect(mockFunction).toHaveNthReturnedWith(2, 'hoge')
   })
 })

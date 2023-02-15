@@ -11,8 +11,8 @@
   "scripts": {
     "lint": "eslint src",
     "test": "jest",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
+    "storybook": "NODE_OPTIONS=--openssl-legacy-provider start-storybook -p 6006",
+    "build-storybook": "NODE_OPTIONS=--openssl-legacy-provider build-storybook",
     "prepare": "husky install",
     "format": "prettier --write src",
     "lint-staged": "lint-staged --allow-empty"

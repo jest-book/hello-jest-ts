@@ -1,6 +1,6 @@
 /* eslint-disable */
 export class Greeter {
-  greet(name) {
+  greet(name: string) {
     return `Hello ${name}`
   }
 }

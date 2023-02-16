@@ -8,3 +8,5 @@ videos
 # jest-junit and jest coverage
 reports
 junit.xml
+
+build-storybook.log

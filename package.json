@@ -15,7 +15,8 @@
     "format": "prettier --write src",
     "lint-staged": "lint-staged --allow-empty",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "chromatic": "chromatic --exit-once-uploaded --exit-zero-on-changes"
   },
   "keywords": [],
   "author": "",
@@ -41,6 +42,7 @@
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
     "babel-loader": "8.3.0",
+    "chromatic": "^6.17.0",
     "chromedriver": "110.0.0",
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",
@@ -69,5 +71,6 @@
       "prettier --write"
     ]
   },
-  "dependencies": {}
+  "readme": "ERROR: No README data found!",
+  "_id": "hello-jest-ts@1.0.0"
 }

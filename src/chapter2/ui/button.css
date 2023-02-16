@@ -6,8 +6,8 @@ button {
   cursor: pointer;
   display: inline-block;
   line-height: 1;
-  font-size: 14px;
-  padding: 11px 20px;
+  font-size: 15px;
+  padding: 21px 30px;
 }
 
 .primary {

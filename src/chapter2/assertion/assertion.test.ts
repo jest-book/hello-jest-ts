@@ -396,6 +396,7 @@ test('throw Error when the length of password is less than 6', () => {
 // Callback 関数を利用した非同期な関数の結果の評価
 // ---------------------------------
 
+// （done関数を利用）コールバック関数の結果の評価
 const fetchDataWithCallback = callback => {
   setTimeout(callback, 3000, 'lemon') // 3秒経ってから`lemon`という文字列を返す
 }

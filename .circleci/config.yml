@@ -20,8 +20,8 @@ jobs: # ジョブの設定
             - ./node_modules
           key: node-v1-{{ checksum "package-lock.json" }}
       - run:
-          name: Run lint
-          command: npm run lint
+          name: Run lint and format # lint and format
+          command: npm run lint && npm run format
       - run:
           name: Run Test # UIとE2E以外のテストを実行
           command: |
@@ -46,11 +46,8 @@ jobs: # ジョブの設定
             - ./node_modules
           key: node-v2-{{ checksum "package-lock.json" }}
       - run:
-          name: Run lint
-          command: npm run lint
-      - run:
-          name: Run format
-          command: npm run format
+          name: Run lint and format
+          command: npm run lint && npm run format
       - run:
           name: Run UI Test
           command: npm test -- src/chapter2/ui
@@ -73,8 +70,8 @@ jobs: # ジョブの設定
             - ./node_modules
           key: node-v2-{{ checksum "package-lock.json" }}
       - run:
-          name: Run lint
-          command: npm run lint
+          name: Run lint and format
+          command: npm run lint && npm run format
       - run:
           name: apt update
           command: sudo apt update

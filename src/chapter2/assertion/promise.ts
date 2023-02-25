@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-empty-function,@typescript-eslint/no-unused-vars */
 
+// ---------------------------------
+// そもそもPromiseとは？
+// ---------------------------------
+
+// プロミスの使い方
 const doSomethingAsync = () => {
   return new Promise((resolve, reject) => {
     // 非同期の処理が成功したときはresolve()を呼ぶ

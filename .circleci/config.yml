@@ -54,6 +54,7 @@ jobs: # ジョブの設定
       - run:
           name: Upload Storybook to Chromatic
           command: npm run chromatic
+  # 検証用のジョブになります。本書での説明はありません。
   e2e-test:
     docker:
       - image: cimg/node:18.14.0
@@ -70,9 +71,6 @@ jobs: # ジョブの設定
             - ./node_modules
           key: node-v2-{{ checksum "package-lock.json" }}
       - run:
-          name: Run lint and format
-          command: npm run lint && npm run format
-      - run:
           name: apt update
           command: sudo apt update
       - browser-tools/install-chrome:
@@ -82,10 +80,10 @@ jobs: # ジョブの設定
       - run:
           name: Run E2E Test
           command: npm test -- src/chapter2/e2e/puppeteer.test.ts src/chapter2/e2e/selenium.test.ts
+  # 検証用のジョブになります。本書での説明はありません。
   playwright-test:
     docker:
       - image: mcr.microsoft.com/playwright:v1.30.0-focal
-    parallelism: 1
     steps:
       - checkout
       - restore_cache:

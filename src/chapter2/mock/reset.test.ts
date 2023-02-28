@@ -62,15 +62,15 @@ describe('#reset mocks with jest.fn', () => {
 
     jest.restoreAllMocks()
 
-    // mockのプロパティはリセットされない
-    expect((Date as jest.MockedFunction<typeof Date>).mock.calls).toEqual([
-      ['2020-12-25'],
-    ])
-    expect((Date as jest.MockedFunction<typeof Date>).mock.results).toEqual([
-      { type: 'return', value: mockDate },
-    ])
+    // mockのプロパティがすべてリセットされる
+    // 29.4.3から jest.resetAllMocksと同様にmockのプロパティがすべてリセットされる
+    // https://github.com/facebook/jest/blob/main/CHANGELOG.md#2943
+    expect((Date as jest.MockedFunction<typeof Date>).mock.calls).toEqual([])
+    expect((Date as jest.MockedFunction<typeof Date>).mock.results).toEqual([])
 
     // spyOnの場合と異なり、jest.fnで関数にモック関数を上書きした場合は、restoreAllMocksを利用してもオリジナルの関数へは元に戻らない
-    expect(new Date(targetDate)).toEqual(mockDate)
+    // 29.4.3から jest.resetAllMocksと同様にmock関数もリセットされ、デフォルトでは`{}`が返される
+    // https://github.com/facebook/jest/blob/main/CHANGELOG.md#2943
+    expect(new Date(targetDate)).toEqual({})
   })
 })

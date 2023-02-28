@@ -6,7 +6,7 @@ jobs: # ジョブの設定
   test:
     docker:
       - image: cimg/node:18.14.0
-    parallelism: 1 # 並列数を2で実行
+    parallelism: 2 # 並列数を2で実行
     steps:
       - checkout # Githubからソースコードをチェックアウトする
       - restore_cache:

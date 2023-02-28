@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // 二重等号を利用した比較では暗黙的な型変換が発生する
 console.log("2" == 2) // true
 console.log(true == 1) // true

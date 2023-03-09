@@ -68,7 +68,7 @@ describe('#reset mocks with jest.fn', () => {
     expect((Date as jest.MockedFunction<typeof Date>).mock.results).toEqual([])
 
     // mock関数もリセットされ、デフォルトでは`{}`が返される
-    // jest.spyOn()を利用し、メソッドのみモック化した場合は、オリジナルの関数へ戻る
+    // この例は、jest.fn()を利用したが、jest.spyOn()でモック化した場合はオリジナルの関数へ戻る
     expect(new Date(targetDate)).toEqual({})
   })
 })

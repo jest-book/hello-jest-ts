@@ -1,9 +1,7 @@
 import axios from 'axios'
 
-class Users {
+export default class Users {
   static search() {
     return axios.get('/users').then(resp => resp.data)
   }
 }
-
-export default Users

@@ -8,9 +8,10 @@ export const Secondary: ComponentStoryObj<typeof Button> = {
   args: { primary: false },
 }
 
+// ボタンをクリックするストーリー
 export const ClickButton: ComponentStoryObj<typeof Button> = {
-  play: async () => {
+  play: () => {
     const button = screen.getByRole('button')
-    await userEvent.click(button)
+    userEvent.click(button)
   },
 }

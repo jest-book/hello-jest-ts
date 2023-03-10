@@ -1,9 +1,9 @@
-/* eslint-disable no-global-assign */
 describe('#reset mocks with jest.fn', () => {
   const targetDate = '2020-12-25'
   const mockDate = new Date('2019-12-25') //targetDateの1年前
 
   beforeEach(() => {
+    // eslint-disable-next-line no-global-assign
     Date = jest.fn(() => mockDate) as unknown as jest.MockedFunction<
       typeof Date
     >

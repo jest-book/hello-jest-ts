@@ -1,4 +1,2 @@
 // 0から9をランダムで返す
-export function seed(): number {
-  return Math.floor(Math.random() * 10)
-}
+export const seed = () => Math.floor(Math.random() * 10)

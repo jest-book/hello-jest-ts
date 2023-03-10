@@ -23,9 +23,4 @@ describe('Button', () => {
     fireEvent.click(button.getByText('OFF'))
     expect(button.getByText(/ON/i)).toBeTruthy()
   })
-
-  // it('debug screen', () => {
-  //   const button = render(<Button />)
-  //   screen.debug()
-  // })
 })

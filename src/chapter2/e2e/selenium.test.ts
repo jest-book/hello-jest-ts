@@ -24,9 +24,10 @@ describe('e2e test with selenium and chromeDriver', () => {
       ],
     })
 
+    // Chromeを起動しWebDriverのインスタンスを取得
     chromeDriver = await new Builder()
       .withCapabilities(chromeCapabilities)
-      .build() // Chromeを起動しWebDriverのインスタンスを取得
+      .build()
   })
 
   afterAll(async () => {
@@ -58,6 +59,7 @@ describe('e2e test with selenium and geckoDriver', () => {
       args: ['-headless'],
     })
 
+    // Firefoxを起動しWebDriverのインスタンスを取得
     geckoDriver = await new Builder()
       .withCapabilities(fireFoxCapabilities)
       .build()

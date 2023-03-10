@@ -1,35 +1,32 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Hello Jest</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <div class="header">
+      <h1>Hello Jest</h1>
+    </div>
+    <button id="showMessage" type="button">Pass Jest Test</button>
+    <div id="message"></div>
 
-<head>
-  <title>Hello Jest</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-
-<body>
-  <div class="header">
-    <h1>Hello Jest</h1>
-  </div>
-  <button id="showMessage" type="button">Pass Jest Test</button>
-  <div id="message"></div>
-
-  <script type="text/javascript">
-    (function () {
-      const showMessage = () => {
-        const p = document.createElement('p');
-        p.textContent = "You Passed!!!";
-        // 2回クリックされてもpタグを挿入しない
-        if (document.querySelector('#message').textContent == "") {
-          // pタグを挿入
-          document.querySelector('#message').prepend(p);
+    <script type="text/javascript">
+      (function() {
+        const showMessage = () => {
+          const p = document.createElement('p');
+          p.textContent = "You Passed!!!";
+          // 2回クリックされてもpタグを挿入しない
+          if (document.querySelector('#message').textContent == "") {
+            // pタグを挿入
+            document.querySelector('#message').prepend(p);
+          }
         }
-      }
-      const button = document.querySelector('#showMessage');
-      // idがshowMessageのボタンがクリックされた際にshowMessage関数を呼び出すよう設定
-      button.addEventListener('click', showMessage);
-    })();
-  </script>
-</body>
-
+        const button = document.querySelector('#showMessage');
+        // idがshowMessageのボタンがクリックされた際にshowMessage関数を呼び出すよう設定
+        button.addEventListener('click', showMessage);
+      })();
+    </script>
+  </body>
 </html>

@@ -47,7 +47,7 @@ describe.each([
     // Press Enter
     await page.locator('[aria-label="Search"]').press('Enter')
 
-    // アサーションはURLが利用されているが、検索毎にURLのパラメーターは変わるため、ページタイトルを利用
+    // アサーションはURLが利用されているが、検索毎にURLのパラメータは変わるため、ページタイトルを利用
     // ページのタイトルが`playwright - Google Search`に切り替わるまで待つ
     await page.waitForNavigation({
       timeout: 2000,

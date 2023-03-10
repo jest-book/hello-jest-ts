@@ -86,7 +86,7 @@ const can4 = new Can({
 // toBe関数を利用したオブジェクトの評価
 // ---------------------------------
 
-// can1 と can2 は異なると評価される
+// can1 と can2 は等しくないと評価される
 test('can1 and can2 are not the exact same instance', () => {
   expect(can1).not.toBe(can2)
 })
@@ -111,28 +111,7 @@ test('can2 and can4 have the same properties', () => {
 })
 
 // ---------------------------------
-// 生成元のクラスを考慮する以外のtoStrictEqualとtoEqualの違い
-// ---------------------------------
-
-// toEqualとtoStrictEqualの違い
-test('differences between toEqual and toStrictEqual', () => {
-  // undefinedを持つプロパティはtoEqualでは無視される
-  expect({ foo: NaN, bar: undefined }).toEqual({ foo: NaN })
-
-  // undefinedを持つプロパティはtoStrictEqualでは一致しないと評価する
-  expect({ foo: NaN, bar: undefined }).not.toStrictEqual({ foo: NaN })
-
-  // undefinedやemptyを持つArrayはtoEqualでは同じと評価される
-  // eslint-disable-next-line no-sparse-arrays
-  expect([, undefined, 1]).toEqual([undefined, , 1])
-
-  // undefinedやemptyを持つArrayはtoEqualでは同じと評価される
-  // eslint-disable-next-line no-sparse-arrays
-  expect([, undefined, 1]).not.toStrictEqual([undefined, , 1])
-})
-
-// ---------------------------------
-// toStrictEqualを利用したオブジェクトの評価
+// toStrictEqual関数を利用したオブジェクトの評価
 // ---------------------------------
 
 // can2 と can4 は等しくないと評価される
@@ -140,8 +119,25 @@ test('can2 and can4 are defferent class', () => {
   expect(can2).not.toStrictEqual(can4)
 })
 
+// 生成元クラスのチェック以外のtoEqualとtoStrictEqualの違い
+/* eslint-disable no-sparse-arrays */
+test('differences between toEqual and toStrictEqual', () => {
+  // toEqual：undefinedを持つプロパティが無視されるので、等しいと評価される
+  expect({ foo: NaN, bar: undefined }).toEqual({ foo: NaN })
+
+  // toStrictEqual：undefinedを持つプロパティもチェックされるので、等しくないと評価される
+  expect({ foo: NaN, bar: undefined }).not.toStrictEqual({ foo: NaN })
+
+  // toEqual：未定義の要素とundefinedの要素を区別しないので、等しいと評価される
+  expect([, undefined, 1]).toEqual([undefined, , 1])
+
+  // toStrictEqual：未定義の要素とundefinedの要素を区別するので、等しくないと評価される
+  expect([, undefined, 1]).not.toStrictEqual([undefined, , 1])
+})
+/* eslint-enable no-sparse-arrays */
+
 // ---------------------------------
-// toBeTruthyとtoBeFalsyを利用した値の評価
+// 曖昧な真偽値の評価
 // ---------------------------------
 
 test('"0" should be Truthy', () => {
@@ -215,7 +211,7 @@ test('0.1 + 0.2 returns 0.3', () => {
 })
 
 test('0.301 and 0.3 are different when numDigits is 3', () => {
-  expect(0.3 + 0.001).not.toBeCloseTo(0.3, 3) // 小数点以下3桁目まで評価する場合、0.3と0.301は異なると評価する
+  expect(0.3 + 0.001).not.toBeCloseTo(0.3, 3) // 小数点以下3桁目まで評価する場合、0.3と0.301は等しくないと評価する
 })
 
 // ---------------------------------
@@ -287,7 +283,7 @@ test('contain IP address between 10.0.0.0 and 10.0.0.99', () => {
 // 配列の部分一致
 // ---------------------------------
 
-// プリミティブ型の場合
+// 配列の要素がプリミティブ型の場合
 const fruitList = ['Apple', 'Lemon', 'Orange']
 
 // 1つの要素が含まれていることを検証
@@ -300,7 +296,7 @@ test('contains Apple and Orange in fruitList', () => {
   expect(fruitList).toEqual(expect.arrayContaining(['Apple', 'Orange']))
 })
 
-// オブジェクト型の場合
+// 配列の要素がオブジェクト型の場合
 const itemList = [
   { name: 'Apple', price: 100 },
   { name: 'Lemon', price: 150 },
@@ -313,7 +309,7 @@ test('contains Apple in itemList', () => {
 })
 
 // 複数の要素が含まれていることを検証
-test('contains Apple and Orange', () => {
+test('contains Apple and Orange in itemList', () => {
   expect(itemList).toEqual(
     expect.arrayContaining([
       { name: 'Apple', price: 100 },
@@ -328,10 +324,10 @@ test('contains Apple and Orange', () => {
 
 const ciBuild = {
   number: 1,
-  dulation: 12000,
+  duration: 12000,
   state: 'success',
   triggerParameters: {
-    is_sucheduled: true,
+    is_scheduled: true,
   },
   type: 'scheduled_pipeline',
   actor: {
@@ -350,10 +346,10 @@ test('actor should be Taka', () => {
 })
 
 // 複数のプロパティを検証
-test('trigered by the scheduled pipeline', () => {
+test('triggered by the scheduled pipeline', () => {
   expect(ciBuild).toEqual(
     expect.objectContaining({
-      triggerParameters: expect.objectContaining({ is_sucheduled: true }),
+      triggerParameters: expect.objectContaining({ is_scheduled: true }),
       type: 'scheduled_pipeline',
     }),
   )
@@ -368,7 +364,7 @@ class User {
   name: string
   password: string
   constructor({ name, password }: { name: string; password: string }) {
-    // passwordは6文字以下の場合Errorをthrowする
+    // passwordが6文字未満の場合Errorをthrowする
     if (password.length < 6)
       throw new Error('The password length must be at least 6 characters.')
     this.name = name
@@ -377,7 +373,7 @@ class User {
 }
 
 // パスワードが6文字未満の場合にErrorがthrowされる
-test('creates a new user with a 6-charactors password', () => {
+test('creates a new user with a 6-character password', () => {
   expect(new User({ name: 'hoge', password: '123456' })).toEqual({
     name: 'hoge',
     password: '123456',
@@ -393,7 +389,7 @@ test('throw Error when the length of password is less than 6', () => {
 })
 
 // ---------------------------------
-// Callback 関数を利用した非同期な関数の結果の評価
+// Callback関数を利用した非同期な関数の結果の評価
 // ---------------------------------
 
 // （done関数を利用）コールバック関数の結果の評価
@@ -410,7 +406,7 @@ test('return lemon', done => {
 })
 
 // ---------------------------------
-// Promise を利用した非同期な関数の結果の評価
+// Promiseを利用した非同期な関数の結果の評価
 // ---------------------------------
 
 // .resolveを利用したPrmiose.resolveを返す関数の結果の評価

@@ -1,12 +1,12 @@
 import { chohan } from './chohan'
 
 jest.mock('./seed', () => {
-  // seedのみモック化する
+  // seedをモック化する
   return {
     seed: jest
       .fn()
-      .mockImplementationOnce(() => 2) // 1度目に偶数を返す
-      .mockImplementationOnce(() => 1), // 2度目に奇数を返す
+      .mockImplementationOnce(() => 2) // 1回目に偶数を返す
+      .mockImplementationOnce(() => 1), // 2回目に奇数を返す
   }
 })
 

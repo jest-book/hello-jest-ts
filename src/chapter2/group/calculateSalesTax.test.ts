@@ -1,4 +1,5 @@
-// 消費税を計算。税率を10%に固定
+// 複数のテストケースを利用したcalculateSalesTax関数のテスト
+// 消費税を計算。税率を10%に固定。
 const calculateSalesTax = (price: number) =>
   price > 0 ? Math.floor((price / 100) * 10) : 0
 
@@ -28,6 +29,7 @@ describe('calculateSalesTax', () => {
   })
 })
 
+// パラメタライズドテストを利用したcalculateSalesTax関数のテスト
 describe('calculateSalesTax with Parameterized Tests', () => {
   test.each([
     { price: 100, expected: 10 },

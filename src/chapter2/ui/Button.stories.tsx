@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react'
-import { screen, userEvent } from '@storybook/testing-library'
+import { screen, userEvent } from '@storybook/testing-library' // @storybook/testing-libraryを追加
 import { Button } from './Button'
 
 export default { component: Button } as ComponentMeta<typeof Button>

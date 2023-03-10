@@ -4,6 +4,7 @@ describe('e2e test with puppeteer', () => {
   let browser: Browser
 
   beforeAll(async () => {
+    // 本書では解説していませんが、CI上で実行する際にはexecutablePathを設定する必要があります。
     if (process.env.CI) {
       browser = await puppeteer.launch({
         executablePath: 'google-chrome-stable',

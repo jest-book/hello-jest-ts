@@ -9,6 +9,7 @@ describe('グループ名', () => {
     expect(true).toBe(true)
   })
 
+  // 入れ子でグループを定義できる
   describe('グループ名', () => {
     test('テストケース', () => {
       expect(true).toBe(true)

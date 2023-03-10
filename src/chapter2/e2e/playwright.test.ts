@@ -25,10 +25,9 @@ describe.each([
     await page.type('input[name="q"]', 'playwright')
     await page.keyboard.press('Enter')
 
-    // ページのタイトルが`playwright - Google Search`に切り替わるまで待つ
-    await page.waitForNavigation({
+    // 次のページに切り替わるまで待つ
+    await page.waitForURL('https://www.google.com/search?q=playwright*', {
       timeout: 2000,
-      waitUntil: 'domcontentloaded',
     })
     expect(await page.title()).toBe('playwright - Google Search')
     // ページを終了する
@@ -47,11 +46,10 @@ describe.each([
     // Press Enter
     await page.locator('[aria-label="Search"]').press('Enter')
 
-    // アサーションはURLが利用されているが、検索毎にURLのパラメータは変わるため、ページタイトルを利用
-    // ページのタイトルが`playwright - Google Search`に切り替わるまで待つ
-    await page.waitForNavigation({
+    // コードジェネレーター上では次のURLをチェックしているが、検索毎にURLのパラメータは変わるため、ページタイトルを利用
+    // 次のページに切り替わるまで待つ
+    await page.waitForURL('https://www.google.com/search?q=playwright*', {
       timeout: 2000,
-      waitUntil: 'domcontentloaded',
     })
     expect(await page.title()).toBe('playwright - Google Search')
     // ページを終了する
